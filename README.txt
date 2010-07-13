@@ -33,6 +33,9 @@ http://www.gnu.org/licenses/gpl.html
 Icons courtesy of Glyphish.
 http://glyphish.com/
 
+iPad scrolling via iScroll JS.
+http://cubiq.org/iscroll
+
 ----------
 
 What's with the name?

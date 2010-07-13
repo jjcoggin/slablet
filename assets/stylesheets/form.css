@@ -50,7 +50,7 @@ input[type=text],
 input[type=time],
 input[type=url],
 input[type=week] {
-	background: #fff url(../images/input_shadow.png) repeat-x;
+	background: #fff url(../images/ui/input_shadow.png) repeat-x;
 	border: 1px solid;
 	border-color: #848484 #c1c1c1 #e1e1e1;
 	color: #000;

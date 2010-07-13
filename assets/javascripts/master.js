@@ -1,20 +1,20 @@
 //
-// Automatically calls all functions in APP.init
+// Automatically calls all functions in SLAB.init
 //
 jQuery(document).ready(function() {
-	APP.go();
+	SLAB.go();
 });
 
 //
 // Module pattern:
 // http://yuiblog.com/blog/2007/06/12/module-pattern/
 //
-var APP = (function($, window, undefined) {
-	// Expose contents of APP.
+var SLAB = (function($, window, undefined) {
+	// Expose contents of SLAB.
 	return {
 		go: function() {
-			for (var i in APP.init) {
-				APP.init[i]();
+			for (var i in SLAB.init) {
+				SLAB.init[i]();
 			}
 		},
 		init: {
@@ -107,7 +107,7 @@ var APP = (function($, window, undefined) {
 					}
 				});
 
-				$('#sidebar_menu a').click(function() {
+				$('#sidebar_menu a').live('click', function() {
 					var el = $(this);
 					var li = $(this).parent('li');
 					var ul = li.find('ul:first');
@@ -134,19 +134,6 @@ var APP = (function($, window, undefined) {
 						return false;
 					}
 				});
-			},
-			scroll: function() {
-				if (!$('#main_content_inner, #sidebar_content_inner').length) {
-					return;
-				}
-
-				$(document).bind('touchmove', function() {
-					return false;
-				});
-
-				if (typeof iScroll !== 'undefined') {
-					var main_content_inner = new iScroll('main_content_inner');
-				}
 			},
 			size_content_areas: function() {
 				if (!$('#main_content, #sidebar_content').length) {
@@ -194,6 +181,20 @@ var APP = (function($, window, undefined) {
 						});
 					}
 				});
+			},
+			touch_scroll: function() {
+				if (!$('#main_content_inner, #sidebar_content_inner').length) {
+					return;
+				}
+
+				$(document).bind('touchmove', function() {
+					return false;
+				});
+
+				if (typeof iScroll !== 'undefined') {
+					var main_content_inner = new iScroll('main_content_inner');
+					// var sidebar_content_inner = new iScroll('sidebar_content_inner');
+				}
 			}
 		}
 	};

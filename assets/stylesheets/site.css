@@ -74,6 +74,14 @@ ul ol {
 	padding-right: 8px;
 }
 
+.gutter_left {
+	padding-left: 20px;
+}
+
+.gutter_right {
+	padding-right: 20px;
+}
+
 /* `Data Table
 ----------------------------------------------------------------------------------------------------*/
 
@@ -146,11 +154,11 @@ table.horiz tr td:first-child {
 }
 
 .button.float_right {
-	margin-left: 7px;
+	margin-right: 7px;
 }
 
 .button.float_left {
-	margin-right: 7px;
+	margin-left: 7px;
 }
 
 /* `Chrome
@@ -207,7 +215,6 @@ table.horiz tr td:first-child {
 .footer_lower {
 	line-height: 45px;
 	overflow: hidden;
-	padding: 0 7px;
 	text-align: center;
 	left: 0;
 	right: 0;
@@ -357,8 +364,7 @@ table.horiz tr td:first-child {
 
 #nav_arrow,
 .is_portrait #sidebar,
-.is_portrait #sidebar .header_upper,
-.is_portrait #sidebar .footer_lower {
+.is_portrait #sidebar .header_upper {
 	display: none;
 }
 
