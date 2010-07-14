@@ -1,4 +1,5 @@
-#main_content {
+#main_content,
+#sidebar_content {
 	overflow-x: hidden;
 	overflow-y: auto;
 }
