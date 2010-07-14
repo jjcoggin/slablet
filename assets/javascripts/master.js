@@ -107,12 +107,19 @@ var SLAB = (function($, window, undefined) {
 					}
 				});
 
-				$('#sidebar_menu a').live('click', function() {
+				$('#sidebar_menu a').live('mousedown', function() {
 					var el = $(this);
 					var li = $(this).parent('li');
 					var ul = li.find('ul:first');
 
 					if (ul.length) {
+						/*
+							Fixes a {return true} conflict with iScroll.js
+						*/
+						if (el.attr('href') === '#') {
+							el.removeAttr('href');
+						}
+
 						if (ul.is(':hidden')) {
 							li.addClass('expanded');
 
@@ -193,7 +200,7 @@ var SLAB = (function($, window, undefined) {
 
 				if (typeof iScroll !== 'undefined') {
 					var main_content_inner = new iScroll('main_content_inner');
-					// var sidebar_content_inner = new iScroll('sidebar_content_inner');
+					var sidebar_content_inner = new iScroll('sidebar_content_inner');
 				}
 			}
 		}

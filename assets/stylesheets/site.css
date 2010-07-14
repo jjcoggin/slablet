@@ -302,6 +302,12 @@ table.horiz tr td:first-child {
 	padding: 10px 20px 10px 30px;
 	position: relative;
 	text-decoration: none;
+	/*
+		Work around for iScroll.js
+		Forces <a> without href="#"
+		to retain the hover state.
+	*/
+	cursor: pointer;
 }
 
 #sidebar_menu .active > a {
