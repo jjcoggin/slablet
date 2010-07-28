@@ -10,6 +10,8 @@ jQuery(document).ready(function() {
 // http://yuiblog.com/blog/2007/06/12/module-pattern/
 //
 var SLAB = (function($, window, undefined) {
+	var TOUCH_DEVICE = typeof Touch === 'object';
+
 	// Expose contents of SLAB.
 	return {
 		go: function() {
@@ -101,40 +103,42 @@ var SLAB = (function($, window, undefined) {
 					return;
 				}
 
+				var touch_click = TOUCH_DEVICE ? 'click' : 'mousedown';
+
 				$('#sidebar_menu li').each(function() {
 					if ($(this).find('ul:first').length) {
 						$(this).find('a:first').prepend('<span class="abs toggle_arrow"></span>');
 					}
 				});
 
-				$('#sidebar_menu a').live('mousedown', function() {
+				$('#sidebar_menu a').live(touch_click, function() {
 					var el = $(this);
 					var li = $(this).parent('li');
 					var ul = li.find('ul:first');
 
-					if (ul.length) {
-						/*
-							Fixes a {return true} conflict with iScroll.js
-						*/
-						if (el.attr('href') === '#') {
-							el.removeAttr('href');
-						}
+					/*
+						Fixes a {return true} conflict with iScroll.js
+					*/
+					if (el.attr('href') === '#') {
+						el.removeAttr('href');
+					}
 
+					if (ul.length) {
 						if (ul.is(':hidden')) {
 							li.addClass('expanded');
 
 							li.siblings('li').each(function() {
 								if ($(this).attr('id') !== 'sidebar_menu_home') {
-									$(this).slideUp('fast');
+									$(this).hide();
 								}
 							});
 
-							ul.slideDown('fast');
+							ul.show();
 						}
 						else {
-							ul.slideUp('fast');
-							li.removeClass('expanded').siblings('li').slideDown('fast');
-							li.find('.expanded').removeClass('expanded').find('ul').slideUp().end().siblings('li').slideDown();
+							ul.hide();
+							li.removeClass('expanded').siblings('li').show();
+							li.find('.expanded').removeClass('expanded').find('ul').hide().end().siblings('li').show();
 						}
 
 						this.blur();
