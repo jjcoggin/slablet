@@ -10,7 +10,7 @@ jQuery(document).ready(function() {
 // http://yuiblog.com/blog/2007/06/12/module-pattern/
 //
 var SLAB = (function($, window, undefined) {
-	var TOUCH_DEVICE = typeof Touch === 'object';
+	var TOUCH_DEVICE = (typeof Touch === 'object');
 
 	// Expose contents of SLAB.
 	return {
