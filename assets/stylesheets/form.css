@@ -5,6 +5,10 @@
 	-- Buttons are unaffected. Native OS style.
 */
 
+::-webkit-input-placeholder {
+	color: #000;
+}
+
 input,
 button,
 select,
