@@ -14,6 +14,17 @@ button,
 select,
 textarea {
 	margin: 0;
+	outline: 0;
+}
+
+button,
+input[type=reset],
+input[type=submit],
+input[type=button] {
+	display: inline-block;
+	font-size: 11px;
+	overflow: visible;
+	width: auto;
 }
 
 input[type=date],
@@ -34,14 +45,14 @@ input[type=week] {
 	width: 132px;
 }
 
-button,
-input[type=reset],
-input[type=submit],
-input[type=button] {
-	display: inline-block;
-	font-size: 11px;
-	overflow: visible;
-	width: auto;
+input[type=search] {
+	-webkit-appearance: none;
+	height: 21px;
+	width: 140px;
+}
+
+input[type=search]::-webkit-search-decoration {
+	display: none;
 }
 
 textarea,
