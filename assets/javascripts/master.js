@@ -29,29 +29,31 @@ var SLAB = (function($, window, undefined) {
 				// It ensures that form elements don't go wider than container.
 				$('textarea, .input_full').wrap('<span class="input_full_wrap"></span>');
 			},
-			search: function() {
-				if (!$('#q').length) {
+			placeholder: function() {
+				var placeholder_supported = 'placeholder' in document.createElement('input');
+
+				if (!$('*[placeholder]').length || placeholder_supported) {
 					return;
 				}
 
-				var input = $('#q');
-				var placeholder_supported = 'placeholder' in document.createElement('input');
-				var text = input.attr('placeholder');
+				$('*[placeholder]').each(function() {
+					var el = $(this);
+					var text = el.attr('placeholder');
 
-				// Check if HTML5 placeholder="..." supported.
-				if (!placeholder_supported) {
-					input.val(text);
+					if (!el.val()) {
+						el.val(text);
+					}
 
-					input.focus(function() {
-						if (input.val() === text) {
-							input.val('');
+					el.focus(function() {
+						if (el.val() === text) {
+							el.val('');
 						}
 					}).blur(function() {
-						if (!input.val()) {
-							input.val(text);
+						if (!el.val()) {
+							el.val(text);
 						}
 					});
-				}
+				});
 			},
 			rotation: function() {
 				function adjust_angle() {
