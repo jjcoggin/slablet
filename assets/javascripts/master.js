@@ -16,7 +16,7 @@ var SLAB = (function($, window, undefined) {
 	var IS_IPAD = (/ipad/gi).test(OS_VERSION);
 	var IS_IPHONE = (/iphone/gi).test(OS_VERSION);
 	var CSS_3D = ('WebKitCSSMatrix' in window && 'm11' in new WebKitCSSMatrix());
-	var SUPPORTS_TOUCH_SCROLL = IS_ANDROID || IS_IPAD || IS_IPHONE || CSS_3D;
+	var SUPPORTS_TOUCH_SCROLL = (IS_ANDROID || IS_IPAD || IS_IPHONE) && CSS_3D;
 
 	// Expose contents of SLAB.
 	return {
@@ -130,13 +130,6 @@ var SLAB = (function($, window, undefined) {
 					var el = $(this);
 					var li = $(this).parent('li');
 					var ul = li.find('ul:first');
-
-					/*
-						Fixes a {return true} conflict with iScroll.js
-					*/
-					// if (el.attr('href') === '#') {
-					// 	el.removeAttr('href');
-					// }
 
 					if (ul.length) {
 						if (ul.is(':hidden')) {
