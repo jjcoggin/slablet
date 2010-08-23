@@ -5,8 +5,28 @@
 	-- Buttons are unaffected. Native OS style.
 */
 
+/* `UI Consistency
+----------------------------------------------------------------------------------------------------*/
+
 ::-webkit-input-placeholder {
-	color: #000;
+	color: #ccc;
+}
+
+/*
+	Separate rule for Firefox.
+	Cannot stack with WebKit's.
+*/
+.placeholder_text {
+	color: #ccc !important;
+}
+
+input[type=search] {
+	-webkit-appearance: none;
+	-webkit-box-sizing: content-box;
+}
+
+input[type=search]::-webkit-search-decoration {
+	display: none;
 }
 
 input,
@@ -16,6 +36,7 @@ textarea {
 	margin: 0;
 }
 
+.ie_button,
 button,
 input[type=reset],
 input[type=submit],
@@ -26,6 +47,7 @@ input[type=button] {
 	width: auto;
 }
 
+.ie_text,
 input[type=date],
 input[type=datetime],
 input[type=datetime-local],
@@ -41,18 +63,9 @@ input[type=time],
 input[type=url],
 input[type=week] {
 	height: 16px;
-	width: 132px;
 }
 
-input[type=search] {
-	-webkit-appearance: none;
-	-webkit-box-sizing: content-box;
-}
-
-input[type=search]::-webkit-search-decoration {
-	display: none;
-}
-
+.ie_text,
 textarea,
 select[multiple],
 input[type=date],
@@ -68,7 +81,10 @@ input[type=text],
 input[type=time],
 input[type=url],
 input[type=week] {
-	background: #fff url(../images/ui/input_shadow.png) repeat-x;
+	/*
+		Copy this image to your own server...
+	*/
+	background: #fff url(../images/input_shadow.png) repeat-x;
 	border: 1px solid;
 	border-color: #848484 #c1c1c1 #e1e1e1;
 	color: #000;
@@ -80,6 +96,7 @@ input[type=week] {
 	vertical-align: top;
 }
 
+.ie_multiple,
 select[multiple] {
 	padding: 0;
 }
@@ -94,4 +111,39 @@ optgroup {
 	color: #000;
 	font-style: normal;
 	font-weight: normal;
+}
+
+/* `Widths
+----------------------------------------------------------------------------------------------------*/
+
+.input_tiny {
+	width: 50px;
+}
+
+.input_small {
+	width: 100px;
+}
+
+.input_medium {
+	width: 150px;
+}
+
+.input_large {
+	width: 200px;
+}
+
+.input_xlarge {
+	width: 250px;
+}
+
+.input_full {
+	width: 100%;
+}
+
+/*
+	Added via JS to <textarea> and class="input_full"
+*/
+.input_full_wrap {
+	display: block;
+	padding-right: 8px;
 }

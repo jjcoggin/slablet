@@ -10,7 +10,13 @@ jQuery(document).ready(function() {
 // http://yuiblog.com/blog/2007/06/12/module-pattern/
 //
 var SLAB = (function($, window, undefined) {
-	var TOUCH_DEVICE = (typeof Touch === 'object');
+	// Constants.
+	var OS_VERSION = navigator.appVersion;
+	var IS_ANDROID = (/android/gi).test(OS_VERSION);
+	var IS_IPAD = (/ipad/gi).test(OS_VERSION);
+	var IS_IPHONE = (/iphone/gi).test(OS_VERSION);
+	var CSS_3D = ('WebKitCSSMatrix' in window && 'm11' in new WebKitCSSMatrix());
+	var SUPPORTS_TOUCH_SCROLL = IS_ANDROID || IS_IPAD || IS_IPHONE || CSS_3D;
 
 	// Expose contents of SLAB.
 	return {
@@ -27,12 +33,12 @@ var SLAB = (function($, window, undefined) {
 
 				// This fixes width: 100% on <textarea> and class="input_full".
 				// It ensures that form elements don't go wider than container.
-				$('textarea, .input_full').wrap('<span class="input_full_wrap"></span>');
+				$('textarea, input.input_full').wrap('<span class="input_full_wrap"></span>');
 			},
 			placeholder: function() {
 				var placeholder_supported = 'placeholder' in document.createElement('input');
 
-				if (!$('*[placeholder]').length || placeholder_supported) {
+				if (placeholder_supported || !$('*[placeholder]').length) {
 					return;
 				}
 
@@ -41,19 +47,28 @@ var SLAB = (function($, window, undefined) {
 					var text = el.attr('placeholder');
 
 					if (!el.val()) {
-						el.val(text);
+						el.val(text).addClass('placeholder_text');
 					}
 
 					el.focus(function() {
 						if (el.val() === text) {
-							el.val('');
+							el.val('').removeClass('placeholder_text');;
 						}
 					}).blur(function() {
 						if (!el.val()) {
-							el.val(text);
+							el.val(text).addClass('placeholder_text');;
 						}
 					});
 				});
+			},
+			autofocus: function() {
+				var autofocus_supported = 'autofocus' in document.createElement('input');
+
+				if (autofocus_supported || !$('*[autofocus]').length) {
+					return;
+				}
+
+				$('*[autofocus]:first').focus().select();
 			},
 			rotation: function() {
 				function adjust_angle() {
@@ -105,15 +120,13 @@ var SLAB = (function($, window, undefined) {
 					return;
 				}
 
-				var touch_click = TOUCH_DEVICE ? 'click' : 'mousedown';
-
 				$('#sidebar_menu li').each(function() {
 					if ($(this).find('ul:first').length) {
 						$(this).find('a:first').prepend('<span class="abs toggle_arrow"></span>');
 					}
 				});
 
-				$('#sidebar_menu a').live(touch_click, function() {
+				$('#sidebar_menu a').live('click', function() {
 					var el = $(this);
 					var li = $(this).parent('li');
 					var ul = li.find('ul:first');
@@ -121,9 +134,9 @@ var SLAB = (function($, window, undefined) {
 					/*
 						Fixes a {return true} conflict with iScroll.js
 					*/
-					if (el.attr('href') === '#') {
-						el.removeAttr('href');
-					}
+					// if (el.attr('href') === '#') {
+					// 	el.removeAttr('href');
+					// }
 
 					if (ul.length) {
 						if (ul.is(':hidden')) {
@@ -196,17 +209,22 @@ var SLAB = (function($, window, undefined) {
 				});
 			},
 			touch_scroll: function() {
-				if (!$('#main_content_inner, #sidebar_content_inner').length) {
+				if (!$('#main_content, #main_content_inner, #sidebar_content, #sidebar_content_inner').length) {
 					return;
 				}
 
-				$(document).bind('touchmove', function() {
-					return false;
-				});
+				if (SUPPORTS_TOUCH_SCROLL && typeof iScroll !== 'undefined') {
+					$(document).bind('touchmove', function() {
+						return false;
+					});
 
-				if (typeof iScroll !== 'undefined') {
 					var main_content_inner = new iScroll('main_content_inner');
 					var sidebar_content_inner = new iScroll('sidebar_content_inner');
+				}
+				else {
+					$('#main_content, #sidebar_content').css({
+						overflow: 'auto'
+					});
 				}
 			}
 		}
